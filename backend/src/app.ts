@@ -1,5 +1,6 @@
 import "dotenv/config";                                                 //for .env folder
 import express from "express";                                          //import express
+import sensordataModel from "./models/node"
 
 const app = express();                                                  //dont know what this does yet / calls the express function i guess
 
