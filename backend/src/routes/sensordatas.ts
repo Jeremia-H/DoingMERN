@@ -1,3 +1,8 @@
+import express from "express";
 import * as SensorDatasController from "../controllers/sensordatas"
 
-app.get("/", );
+const router = express.Router();
+
+router.get("/", SensorDatasController.getSensorDatas);
+
+export default router;
