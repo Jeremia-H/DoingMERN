@@ -1,8 +1,12 @@
 import express from "express";
 import * as SensorDatasController from "../controllers/sensordatas"
 
-const router = express.Router();
+const router = express.Router();                                                            // creating a new router 
 
-router.get("/", SensorDatasController.getSensorDatas);
+router.get("/", SensorDatasController.getSensorDatas);                                      // we use the getSensorDatas we created for all Data
 
-export default router;
+router.get("/:sensordataID", SensorDatasController.getSensorData);                           //with the : express will treat this as a variable, we use the getSensorData we created for dynamic ID
+
+router.post("/", SensorDatasController.createSensorData );                                    // this refers to the functions we have in the controller folder
+
+export default router;                                       

@@ -4,7 +4,9 @@ import sensordatasRoutes from "./routes/sensordatas"
 
 const app = express();                                                  //dont know what this does yet / calls the express function i guess
 
-app.use("/api/sensordatas", sensordatasRoutes);                         //linking the sensordataroute
+app.use(express.json());
+
+app.use("/api/sensordata", sensordatasRoutes);                         //linking the sensordataroute
 
 app.use((req, res, next) => {
     next(Error("Endpoint not found"));
