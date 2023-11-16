@@ -2,7 +2,7 @@ import { InferSchemaType, Schema, model } from "mongoose";                      
 
 const sensordataSchema = new Schema({                                               //create new schema 
     sensorname: { type: String, required: true  },                  
-    grad: { type: BigInt},
+    grad: { type: String},
 }, {timestamps: true });                                                            //timestamps outside because mongoose will do this field automatically with this
 
 type SensorData = InferSchemaType<typeof sensordataSchema>;                         //Create a type SensorData and say to use the sensordataSchema for it. 
