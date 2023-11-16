@@ -4,15 +4,7 @@ import sensordataModel from "./models/sensordata"
 
 const app = express();                                                  //dont know what this does yet / calls the express function i guess
 
-app.get("/", async (req, res, next) => {                                      //changed this to asnyc so we can use await in the function.
-    try {                                                               //Error Handling!
-        // throw Error("Bazinga!");                                     //Trial Error
-        const sensordatas = await sensordataModel.find().exec();            //With this we get the data from the database
-        res.status(200).json(sensordatas);                                  // this catches the response from the await above as ok and then gives out the sensordata as json    
-    } catch (error) {                                                   //Error Handling Part 2
-        next(error);
-    }
-});
+
 
 app.use((req, res, next) => {
     next(Error("Endpoint not found"));
