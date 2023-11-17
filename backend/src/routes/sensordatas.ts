@@ -9,4 +9,8 @@ router.get("/:sensordataID", SensorDatasController.getSensorData);              
 
 router.post("/", SensorDatasController.createSensorData );                                    // this refers to the functions we have in the controller folder
 
+router.patch("/:sensordataID", SensorDatasController.updateSensorData);
+
+router.delete("/:sensordataID", SensorDatasController.deleteSensorData);
+
 export default router;                                       
