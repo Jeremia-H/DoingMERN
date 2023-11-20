@@ -3,6 +3,7 @@ import { SensorData as SensorDataModel} from './models/sensordata';             
 import  SensorDataComponent from './components/SensorData';
 import { Button, Col, Container, Row } from 'react-bootstrap';
 import styles from "./styles/SensorDataPage.module.css"
+import stylesUtils from "./styles/utils.module.css"
 import * as SensorDatasApi from "./network/sensordatas_api";
 import AddSensorDataDialog from './components/AddSensorDataDialog';
 
@@ -26,7 +27,10 @@ function App() {
 
   return (
     <Container>
-      <Button onClick={() => setAddSensorDataDialog(true)}>
+      <Button
+       className={`mb-4 ${stylesUtils.blockCenter}`}
+
+       onClick={() => setAddSensorDataDialog(true)}>
         Add new Sensordata
       </Button>
       <Row xs={1} md={2} xl={3} className='g-4'>                                                        {/*this changes the layout for screen-size and also applies the bootstrap g-4 styling*/}                               
@@ -38,7 +42,13 @@ function App() {
       </Row>
       {showAddSensorDataDialog &&
       <AddSensorDataDialog
-      onDismiss={() => setAddSensorDataDialog(false)}/> //onDismiss is a function without a return and triggers onHide, so we use this to call the setAddSensorDataDialog function and set it to false and hide the modal with it.
+      onDismiss={() => setAddSensorDataDialog(false)} //onDismiss is a function without a return and triggers onHide, so we use this to call the setAddSensorDataDialog function and set it to false and hide the modal with it.
+      onSensorDataSaved={(newSensorData) => {
+        setSensorData([...sensordata, newSensorData])
+        setAddSensorDataDialog(false)
+      }}
+
+      />
       }
     </Container>
   );
