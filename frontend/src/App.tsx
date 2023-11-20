@@ -3,6 +3,7 @@ import { SensorData as SensorDataModel} from './models/sensordata';             
 import  SensorDataComponent from './components/SensorData';
 import { Col, Container, Row } from 'react-bootstrap';
 import styles from "./styles/SensorDataPage.module.css"
+import * as SensorDatasApi from "./network/sensordatas_api";
 
 function App() {
   const[sensordata, setSensorData] = useState<SensorDataModel[]>([]);                                          //We make an array for the useState function and thenn tell it that it should be an empty array and also that sensordata is supposed to be of the datatype of our model as an array
@@ -10,8 +11,7 @@ function App() {
   useEffect(() => {                                                                                            // with use effect we can setup a function that should run outside of the site rendering, so it does not run every time we render
     async function loadSensordatas() {                                                                         //we need to use an async function inside of the useEffect function because thats just how it works
     try {
-      const response = await fetch("http://localhost:5000/api/sensordata", { method: "GET"});                  //this is the link we setup in the backend to get all of our sensordata, so we use a get request
-      const sensordatas = await response.json();                                                               // we then parse the response as json into the sensordatas const and give that to the setSensorData function we created outside of this
+      const sensordatas = await SensorDatasApi.fetchSensorDatas();
       setSensorData(sensordatas);
     } catch (error) {
       console.error(error);
