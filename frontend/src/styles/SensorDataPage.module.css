@@ -1,0 +1,9 @@
+.sensordata {
+    height:200px;                                   
+    transition: box-shadow 2s ease-in-out ; 
+    cursor: pointer;                               
+}
+
+.sensordata:hover{
+    box-shadow: 10px 10px 15px silver;          
+}
