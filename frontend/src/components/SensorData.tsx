@@ -2,13 +2,16 @@ import styles from "../styles/SensorData.module.css"
 import { Card} from "react-bootstrap";
 import { SensorData as SensorDataModel } from "../models/sensordata";
 import { formatDate } from "../utils/formatDate";
+import {MdDelete} from "react-icons/md"
+
 
 interface SensorDataProps {                                             // creating an interface with our model that we created, so we can use the data from the model in the card
     sensordataInsideProps: SensorDataModel,
     className?: string,
+    onDeleteSensorDataClicked: (SensorData: SensorDataModel) => void,
 }
 
-const SensorData = ({ sensordataInsideProps, className} : SensorDataProps) => {               //Destructoring so we can just use the sensordata direcly out of the Props instead of always having to write SensorDataProps.sensordata for example
+const SensorData = ({ sensordataInsideProps, className, onDeleteSensorDataClicked} : SensorDataProps) => {               //Destructoring so we can just use the sensordata direcly out of the Props instead of always having to write SensorDataProps.sensordata for example
     const {
         sensorname,
         grad,
@@ -27,6 +30,12 @@ const SensorData = ({ sensordataInsideProps, className} : SensorDataProps) => { 
             <Card.Body className={styles.cardBody}>
                 <Card.Title>
                     {sensorname}
+                    <MdDelete
+                    className="text-muted ms-auto"
+                    onClick={(e) => {
+                        onDeleteSensorDataClicked(sensordataInsideProps);
+                        e.stopPropagation(); //this stops the click from going "through" the note 
+                    }}/>
                 </Card.Title>
                 <Card.Text className={styles.cardText}>
                     {grad}

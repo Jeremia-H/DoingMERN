@@ -31,3 +31,7 @@ export async function createSensorData(sensordata: SensorDataInput): Promise<Sen
 
     return response.json();
 }
+
+export async function deleteSensorData(sensordataID: string) {
+    await fetchData("http://localhost:5000/api/sensordata/" + sensordataID, { method: "DELETE"});
+}
