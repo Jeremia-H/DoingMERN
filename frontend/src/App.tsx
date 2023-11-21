@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { SensorData as SensorDataModel } from "./models/sensordata"; //alias so it does nto get so confusing
 import SensorDataComponent from "./components/SensorData";
-import { Button, Col, Container, Row } from "react-bootstrap";
+import { Button, Col, Container, Row, Spinner } from "react-bootstrap";
 import styles from "./styles/SensorDataPage.module.css";
 import stylesUtils from "./styles/utils.module.css";
 import * as SensorDatasApi from "./network/sensordatas_api";
@@ -10,6 +10,8 @@ import { FaPlus } from "react-icons/fa";
 
 function App() {
   const [sensordatas, setSensorData] = useState<SensorDataModel[]>([]); //We make an array for the useState function and thenn tell it that it should be an empty array and also that sensordata is supposed to be of the datatype of our model as an array
+  const [sensordatasLoading, setSensorDatasLoading] = useState(true); //Using this for progressbar of loading data
+  const [showSensorDatasLoadingError, setShowSensorDatasLoadingError] = useState(false); //Using this for progressbar of loading data
 
   const [showAddSensorDataDialog, setAddSensorDataDialog] = useState(false);
   const [sensordataToEdit, setSensorDataToEdit] =
@@ -20,11 +22,15 @@ function App() {
     async function loadSensordatas() {
       //we need to use an async function inside of the useEffect function because thats just how it works
       try {
+        setShowSensorDatasLoadingError(false);
+        setSensorDatasLoading(true);
         const sensordatas = await SensorDatasApi.fetchSensorDatas();
         setSensorData(sensordatas);
       } catch (error) {
         console.error(error);
-        alert(error);
+        setShowSensorDatasLoadingError(true);
+      } finally {
+        setSensorDatasLoading(false);
       }
     }
     loadSensordatas(); // dont forget to call the function because we had to put it inside of another function
@@ -44,16 +50,8 @@ function App() {
     }
   }
 
-  return (
-    <Container>
-      <Button
-        className={`mb-4 ${stylesUtils.blockCenter} ${stylesUtils.FlexCenter}`}
-        onClick={() => setAddSensorDataDialog(true)}
-      >
-        <FaPlus />
-        Add new Sensordata
-      </Button>
-      <Row xs={1} md={2} xl={3} className="g-4">
+  const sensorDataGrid = 
+  <Row xs={1} md={2} xl={3} className={`g-4 ${styles.sensordataGrid}`}>
         {" "}
         {/*this changes the layout for screen-size and also applies the bootstrap g-4 styling*/}
         {sensordatas.map(
@@ -71,6 +69,26 @@ function App() {
           )
         )}
       </Row>
+
+  return (
+    <Container className={styles.sensordatasPage}>
+      <Button
+        className={`mb-4 ${stylesUtils.blockCenter} ${stylesUtils.FlexCenter}`}
+        onClick={() => setAddSensorDataDialog(true)}
+      >
+        <FaPlus />
+        Add new Sensordata
+      </Button>
+      {sensordatasLoading && <Spinner variant="Primary" />}
+      {showSensorDatasLoadingError && <p>Ladefehler went wrong. Please refresh</p>}
+      {!sensordatasLoading && !showSensorDatasLoadingError && 
+      <>
+      {
+        sensordatas.length > 0
+        ? sensorDataGrid
+        : <p>There is no sensordata.</p>
+      }
+      </>}
       {showAddSensorDataDialog && (
         <AddEditSensorDataDialog
           onDismiss={() => setAddSensorDataDialog(false)} //onDismiss is a function without a return and triggers onHide, so we use this to call the setAddSensorDataDialog function and set it to false and hide the modal with it.

@@ -1,3 +1,12 @@
+.sensordataPage {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.sensordataGrid {
+    width: 100%
+}
+
 .sensordata {
     height:200px;                                   
     transition: box-shadow 2s ease-in-out ; 
