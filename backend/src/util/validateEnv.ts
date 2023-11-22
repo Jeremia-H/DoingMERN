@@ -4,4 +4,5 @@ import { port, str } from "envalid/dist/validators";        // there is a valida
 export default cleanEnv(process.env, {                      //use the function to export our env variables
     MONGO_CONNNECTION_STRING: str(),
     PORT: port(),
+    SESSION_SECRET: str(),
 });

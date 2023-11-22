@@ -3,14 +3,31 @@ import express, { NextFunction, Request, Response } from "express";             
 import sensordatasRoutes from "./routes/sensordatas"
 import createHttpError, { isHttpError } from "http-errors";                                                  //createHttpError is a default immport, isHttpError not 
 import morgan from "morgan"
+import userRoutes from "./routes/users";
+import session from "express-session";
+import env from "./util/validateEnv";
+import MongoStore from "connect-mongo";
 
 const app = express();                                                                                       //dont know what this does yet / calls the express function i guess
-
 app.use(morgan("dev"));                                                                                     //installed morgan for cooler logs
 
 app.use(express.json());
 
+app.use(session({
+    secret: env.SESSION_SECRET,
+    resave: false,
+    saveUninitialized: false,
+    cookie: {
+        maxAge: 60*60*1000,
+    },
+    rolling: true,
+    store: MongoStore.create({
+        mongoUrl: env.MONGO_CONNNECTION_STRING
+    }),
+}));
+
 app.use("/api/sensordata", sensordatasRoutes);                                                               //linking the sensordataroute
+app.use("/api/users", userRoutes);
 
 app.use((req, res, next) => {
     next(createHttpError(404, "Endpoint not found"));                                                        //Error handling via the http-errors package
