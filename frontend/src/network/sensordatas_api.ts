@@ -53,12 +53,11 @@ export async function login(credentials: LoginCredentials): Promise<User> {
   return response.json();
 }
 
-export async function logout(): Promise<User> {
-  const response = await fetchData("http://localhost:5000/api/users/logout",
+export async function logout() {
+  fetchData("http://localhost:5000/api/users/logout",
   {
-    method: "POST",
+    method: "GET",
   });
-  return response.json();
 }
 
 

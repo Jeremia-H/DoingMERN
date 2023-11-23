@@ -7,11 +7,21 @@ import userRoutes from "./routes/users";
 import session from "express-session";
 import env from "./util/validateEnv";
 import MongoStore from "connect-mongo";
+import cors from "cors";
 
 const app = express();                                                                                       //dont know what this does yet / calls the express function i guess
+
 app.use(morgan("dev"));                                                                                     //installed morgan for cooler logs
 
 app.use(express.json());
+
+app.use(
+    cors({
+      origin: "http://localhost:3000",
+      methods: ["POST", "PUT", "GET", "OPTIONS", "HEAD"],
+      credentials: true,
+    })
+  );
 
 app.use(session({
     secret: env.SESSION_SECRET,
