@@ -3,6 +3,7 @@ import { SensorData } from "../models/sensordata";
 import { useForm } from "react-hook-form";
 import { SensorDataInput } from "../network/sensordatas_api";
 import * as SensorDataApi from "../network/sensordatas_api";
+import TextInputField from "./form/TextInputField";
 
 interface AddEditSensorDataDIalogProps {
   //creating this interface just makes it more cleaner
@@ -57,28 +58,23 @@ const AddEditSensorDataDialog = ({
       </Modal.Header>
       <Modal.Body>
         <Form id="addEditSensorDataForm" onSubmit={handleSubmit(onSubmit)}>
-          <Form.Group className="mb-3">
-            <Form.Label>SensorName</Form.Label>
-            <Form.Control
-              type="text"
-              placeholder="Sensor?"
-              isInvalid={!!errors.sensorname}
-              {...register("sensorname", { required: "Required" })}
-            />
-            <Form.Control.Feedback type="invalid">
-              {errors.sensorname?.message}
-            </Form.Control.Feedback>
-          </Form.Group>
-
-          <Form.Group className="mb-3">
-            <Form.Label>Grad Zahl?</Form.Label>
-            <Form.Control
-              as="textarea"
-              rows={6}
-              placeholder="Hier kann man was reinschreiben !"
-              {...register("grad")}
-            />
-          </Form.Group>
+          <TextInputField 
+          name="title"
+          label="Title"
+          type="text"
+          placeholder="Title"
+          register={register}
+          registerOptions={{ required: "Required"}}
+          error={errors.sensorname}
+          />
+          <TextInputField
+          name="grad"
+          label="Grad Zahl?"
+          as="textarea"
+          rows={5}
+          placeholder="Text"
+          register={register}
+          />
         </Form>
       </Modal.Body>
 
