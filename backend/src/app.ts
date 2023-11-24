@@ -8,6 +8,7 @@ import session from "express-session";
 import env from "./util/validateEnv";
 import MongoStore from "connect-mongo";
 import cors from "cors";
+import { requiresAuth } from "./middleware/auth";
 
 const app = express();                                                                                       //dont know what this does yet / calls the express function i guess
 
@@ -36,8 +37,9 @@ app.use(session({
     }),
 }));
 
-app.use("/api/sensordata", sensordatasRoutes);                                                               //linking the sensordataroute
+
 app.use("/api/users", userRoutes);
+app.use("/api/sensordata",requiresAuth,  sensordatasRoutes);                                                               //linking the sensordataroute //we call requiresAuth Middleware so we check if a user session is already established or not
 
 app.use((req, res, next) => {
     next(createHttpError(404, "Endpoint not found"));                                                        //Error handling via the http-errors package

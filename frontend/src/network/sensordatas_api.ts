@@ -13,7 +13,7 @@ async function fetchData(input: RequestInfo, init?: RequestInit) {
 }
 
 export async function getLoggedInUser(): Promise<User> {
-  const response = await fetchData("http://localhost:5000/api/users", { method: "GET"})
+  const response = await fetchData("/api/users", { method: "GET"})
   return response.json();
   
 }
@@ -25,7 +25,7 @@ export interface SignUpCredentials {
 }
 
 export async function signUp(credentials: SignUpCredentials ): Promise<User> {
-  const response = await fetchData("http://localhost:5000/api/users/signup",
+  const response = await fetchData("/api/users/signup",
   {
     method: "POST",
     headers: {
@@ -42,7 +42,7 @@ export interface LoginCredentials {
 }
 
 export async function login(credentials: LoginCredentials): Promise<User> {
-  const response = await fetchData("http://localhost:5000/api/users/login",
+  const response = await fetchData("/api/users/login",
   {
     method: "POST",
     headers: {
@@ -54,7 +54,7 @@ export async function login(credentials: LoginCredentials): Promise<User> {
 }
 
 export async function logout() {
-  fetchData("http://localhost:5000/api/users/logout",
+  fetchData("/api/users/logout",
   {
     method: "GET",
   });
@@ -62,7 +62,7 @@ export async function logout() {
 
 
 export async function fetchSensorDatas(): Promise<SensorData[]> {
-  const response = await fetchData("http://localhost:5000/api/sensordata", {
+  const response = await fetchData("/api/sensordata", {
     method: "GET",
   }); //this is the link we setup in the backend to get all of our sensordata, so we use a get request
   return response.json(); // we then parse the response as json into the sensordatas const and give that to the setSensorData function we created outside of this
@@ -75,7 +75,7 @@ export interface SensorDataInput {
 export async function createSensorData(
   sensordata: SensorDataInput
 ): Promise<SensorData> {
-  const response = await fetchData("http://localhost:5000/api/sensordata", {
+  const response = await fetchData("/api/sensordata", {
     method: "POST", //because we want to send data
     headers: {
       "Content-Type": "application/json", //this tells our backend we are sending a json
@@ -90,7 +90,7 @@ export async function updateSensorData(
   sensordata: SensorDataInput
 ): Promise<SensorData> {
   const response = await fetchData(
-    "http://localhost:5000/api/sensordata/" + sensordataID,
+    "/api/sensordata/" + sensordataID,
     {
       method: "PATCH",
       headers: {
@@ -103,7 +103,7 @@ export async function updateSensorData(
 }
 
 export async function deleteSensorData(sensordataID: string) {
-  await fetchData("http://localhost:5000/api/sensordata/" + sensordataID, {
+  await fetchData("/api/sensordata/" + sensordataID, {
     method: "DELETE",
   });
 }

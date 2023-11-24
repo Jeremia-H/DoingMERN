@@ -1,6 +1,7 @@
 import { InferSchemaType, Schema, model } from "mongoose";                                  //imports the mongoose functions we need 
 
 const sensordataSchema = new Schema({                                               //create new schema 
+    userId: {type: Schema.Types.ObjectId, required: true},
     sensorname: { type: String, required: true  },                  
     grad: { type: String},
 }, {timestamps: true });                                                            //timestamps outside because mongoose will do this field automatically with this
