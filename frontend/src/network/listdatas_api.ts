@@ -1,5 +1,5 @@
 import { ConflictError, UnauthorizedError } from "../errors/http_errors";
-import { SensorData } from "../models/sensordata";
+import { ListData } from "../models/listdata";
 import { User } from "../models/user";
 
 async function fetchData(input: RequestInfo, init?: RequestInit) {
@@ -68,49 +68,49 @@ export async function logout() {
 }
 
 
-export async function fetchSensorDatas(): Promise<SensorData[]> {
-  const response = await fetchData("/api/sensordata", {
+export async function fetchListDatas(): Promise<ListData[]> {
+  const response = await fetchData("/api/Listdata", {
     method: "GET",
-  }); //this is the link we setup in the backend to get all of our sensordata, so we use a get request
-  return response.json(); // we then parse the response as json into the sensordatas const and give that to the setSensorData function we created outside of this
+  }); //this is the link we setup in the backend to get all of our Listdata, so we use a get request
+  return response.json(); // we then parse the response as json into the Listdatas const and give that to the setListData function we created outside of this
 }
-export interface SensorDataInput {
-  sensorname: string;
-  grad: string;
+export interface ListDataInput {
+  titel: string;
+  text: string;
 }
 
-export async function createSensorData(
-  sensordata: SensorDataInput
-): Promise<SensorData> {
-  const response = await fetchData("/api/sensordata", {
+export async function createListData(
+  Listdata: ListDataInput
+): Promise<ListData> {
+  const response = await fetchData("/api/Listdata", {
     method: "POST", //because we want to send data
     headers: {
       "Content-Type": "application/json", //this tells our backend we are sending a json
     },
-    body: JSON.stringify(sensordata), //we can only send strings back and forth between server and frontend
+    body: JSON.stringify(Listdata), //we can only send strings back and forth between server and frontend
   });
 
   return response.json();
 }
-export async function updateSensorData(
-  sensordataID: string,
-  sensordata: SensorDataInput
-): Promise<SensorData> {
+export async function updateListData(
+  ListdataID: string,
+  Listdata: ListDataInput
+): Promise<ListData> {
   const response = await fetchData(
-    "/api/sensordata/" + sensordataID,
+    "/api/Listdata/" + ListdataID,
     {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json", //this tells our backend we are sending a json
       },
-      body: JSON.stringify(sensordata), //we can only send strings back and forth between server and frontend
+      body: JSON.stringify(Listdata), //we can only send strings back and forth between server and frontend
     }
   );
   return response.json();
 }
 
-export async function deleteSensorData(sensordataID: string) {
-  await fetchData("/api/sensordata/" + sensordataID, {
+export async function deleteListData(ListdataID: string) {
+  await fetchData("/api/Listdata/" + ListdataID, {
     method: "DELETE",
   });
 }

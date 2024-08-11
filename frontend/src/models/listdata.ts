@@ -1,7 +1,7 @@
-export interface SensorData {
+export interface ListData {
     _id: string,
-    sensorname: string,
-    grad?: string,
+    titel: string,
+    text?: string,
     createdAt: string,
     updateAt: string,
     __v?: string,

@@ -2,12 +2,12 @@ import { useEffect, useState } from "react";
 import { Container } from "react-bootstrap";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import PrivacyPage from "./Pages/PrivacyPage";
-import SensorDataPage from "./Pages/SensorDataPage";
+import ListDataPage from "./Pages/ListDataPage";
 import LoginModal from "./components/LoginModal";
 import NavBar from "./components/NavBar";
 import SignUpModal from "./components/SignUpModal";
 import { User } from "./models/user";
-import * as SensorDataApi from "./network/sensordatas_api";
+import * as listDataApi from "./network/listdatas_api";
 import styles from "./styles/App.module.css"
 
 function App() {
@@ -19,7 +19,7 @@ function App() {
   useEffect(() => {
     async function fetchLoggedInUser() {
       try {
-        const user = await SensorDataApi.getLoggedInUser();
+        const user = await listDataApi.getLoggedInUser();
         setLoggedInUser(user);
       } catch (error) {
         console.error(error);
@@ -41,7 +41,7 @@ function App() {
           <Routes>
             <Route
               path="/"
-              element={<SensorDataPage loggedInUser={loggedInUser} />}
+              element={<ListDataPage loggedInUser={loggedInUser} />}
             />
             <Route path="/privacy" element={
             <PrivacyPage />} 

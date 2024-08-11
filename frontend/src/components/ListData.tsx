@@ -1,25 +1,25 @@
-import styles from "../styles/SensorData.module.css";
+import styles from "../styles/listData.module.css";
 import { Card } from "react-bootstrap";
-import { SensorData as SensorDataModel } from "../models/sensordata";
+import { ListData as listDataModel } from "../models/listdata";
 import { formatDate } from "../utils/formatDate";
 import { MdDelete } from "react-icons/md";
 
-interface SensorDataProps {
+interface listDataProps {
   // creating an interface with our model that we created, so we can use the data from the model in the card
-  sensordataInsideProps: SensorDataModel;
+  listdataInsideProps: listDataModel;
   className?: string;
-  onDeleteSensorDataClicked: (SensorData: SensorDataModel) => void;
-  onSensorDataClicked: (SensorData: SensorDataModel) => void;
+  onDeletelistDataClicked: (listData: listDataModel) => void;
+  onlistDataClicked: (listData: listDataModel) => void;
 }
 
-const SensorData = ({
-  sensordataInsideProps,
+const listData = ({
+  listdataInsideProps,
   className,
-  onDeleteSensorDataClicked,
-  onSensorDataClicked,
-}: SensorDataProps) => {
-  //Destructoring so we can just use the Props directly instead of always having to write SensorDataProps.sensordata for example
-  const { sensorname, grad, createdAt, updateAt } = sensordataInsideProps; // Further Destructoring of the sensordata
+  onDeletelistDataClicked,
+  onlistDataClicked,
+}: listDataProps) => {
+  //Destructoring so we can just use the Props directly instead of always having to write listDataProps.listdata for example
+  const { titel, text, createdAt, updateAt } = listdataInsideProps; // Further Destructoring of the listdata
 
   let createdUpdatedText: string; // we need this for updating notes
   if (updateAt > createdAt) { //just logic if we display the update date or the created date
@@ -29,25 +29,25 @@ const SensorData = ({
   }
   return (
     <Card
-      className={`${styles.sensordataCard} ${className}`}
-      onClick={() => onSensorDataClicked(sensordataInsideProps)} //this callsback to app.tsx
+      className={`${styles.listdataCard} ${className}`}
+      onClick={() => onlistDataClicked(listdataInsideProps)} //this callsback to app.tsx
     >
       <Card.Body className={styles.cardBody}>
         <Card.Title>
-          {sensorname}
+          {titel}
           <MdDelete //this is an automatic trashbin icon from react-icons/md
             className="text-muted ms-auto"
             onClick={(e) => { //by defining e we can use it
-              onDeleteSensorDataClicked(sensordataInsideProps); //this callsback to app.tsx
+              onDeletelistDataClicked(listdataInsideProps); //this callsback to app.tsx
               e.stopPropagation(); //this stops the click from going "through" the note
             }}
           />
         </Card.Title>
-        <Card.Text className={styles.cardText}>{grad}</Card.Text>
+        <Card.Text className={styles.cardText}>{text}</Card.Text>
       </Card.Body>
       <Card.Footer className="text-muted">{createdUpdatedText}</Card.Footer>
     </Card>
   );
 };
 
-export default SensorData;
+export default listData;

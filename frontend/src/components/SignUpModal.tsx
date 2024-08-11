@@ -1,7 +1,7 @@
 import { useForm } from "react-hook-form";
 import { User } from "../models/user";
-import { SignUpCredentials } from "../network/sensordatas_api";
-import * as SensorDataApi from "../network/sensordatas_api";
+import { SignUpCredentials } from "../network/listdatas_api";
+import * as SensorDataApi from "../network/listdatas_api";
 import { Alert, Button, Form, Modal } from "react-bootstrap";
 import TextInputField from "./form/TextInputField";
 import styleUtils from "../styles/utils.module.css";

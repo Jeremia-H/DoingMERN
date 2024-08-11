@@ -1,18 +1,18 @@
-.sensordataPage {
+.listdataPage {
     display: flex;
     flex-direction: column;
     align-items: center;
 }
-.sensordataGrid {
+.listdataGrid {
     width: 100%
 }
 
-.sensordata {
+.listdata {
     height:200px;                                   
     transition: box-shadow 2s ease-in-out ; 
     cursor: pointer;                               
 }
 
-.sensordata:hover{
+.listdata:hover{
     box-shadow: 10px 10px 15px silver;          
 }

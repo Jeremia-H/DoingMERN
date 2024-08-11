@@ -1,48 +1,48 @@
 import { Button, Form, Modal } from "react-bootstrap";
-import { SensorData } from "../models/sensordata";
+import { ListData } from "../models/listdata";
 import { useForm } from "react-hook-form";
-import { SensorDataInput } from "../network/sensordatas_api";
-import * as SensorDataApi from "../network/sensordatas_api";
+import { ListDataInput } from "../network/listdatas_api";
+import * as ListDataApi from "../network/listdatas_api";
 import TextInputField from "./form/TextInputField";
 
-interface AddEditSensorDataDIalogProps {
+interface AddEditListDataDIalogProps {
   //creating this interface just makes it more cleaner
-  sensordataToEdit?: SensorData;
+  ListdataToEdit?: ListData;
   onDismiss: () => void;
-  onSensorDataSaved: (sensordata: SensorData) => void;
+  onListDataSaved: (Listdata: ListData) => void;
 }
 
-const AddEditSensorDataDialog = ({
-  sensordataToEdit,
+const AddEditListDataDialog = ({
+  ListdataToEdit,
   onDismiss,
-  onSensorDataSaved,
-}: AddEditSensorDataDIalogProps) => {
+  onListDataSaved,
+}: AddEditListDataDIalogProps) => {
   //destructing once again so we can use ondismiss directly in the code
 
   const {
     register,
     handleSubmit,
     formState: { errors, isSubmitting },
-  } = useForm<SensorDataInput>({
-    defaultValues: {                //show these default values if the sensor is being edited and already has some
-      sensorname: sensordataToEdit?.sensorname || "",
-      grad: sensordataToEdit?.grad || "",
+  } = useForm<ListDataInput>({
+    defaultValues: {                //show these default values if the List is being edited and already has some
+      titel: ListdataToEdit?.titel || "",
+      text: ListdataToEdit?.text || "",
     },
   });
 
-  async function onSubmit(input: SensorDataInput) {
+  async function onSubmit(input: ListDataInput) {
     try {
-      let sensordataResponse: SensorData;
-      if (sensordataToEdit) {
-        sensordataResponse = await SensorDataApi.updateSensorData(
-          sensordataToEdit._id,
+      let ListdataResponse: ListData;
+      if (ListdataToEdit) {
+        ListdataResponse = await ListDataApi.updateListData(
+          ListdataToEdit._id,
           input
         );
       } else {
-        sensordataResponse = await SensorDataApi.createSensorData(input);
+        ListdataResponse = await ListDataApi.createListData(input);
       }
 
-      onSensorDataSaved(sensordataResponse);
+      onListDataSaved(ListdataResponse);
     } catch (error) {
       console.error(error);
       alert(error);
@@ -53,23 +53,23 @@ const AddEditSensorDataDialog = ({
     <Modal show onHide={onDismiss}>
       <Modal.Header closeButton>
         <Modal.Title>
-          {sensordataToEdit ? "Edit Sensordata" : "Add Sensordata"}
+          {ListdataToEdit ? "Edit Listdata" : "Add Listdata"}
         </Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        <Form id="addEditSensorDataForm" onSubmit={handleSubmit(onSubmit)}>
+        <Form id="addEditListDataForm" onSubmit={handleSubmit(onSubmit)}>
           <TextInputField 
-          name="title"
-          label="Title"
+          name="titel"
+          label="titel"
           type="text"
-          placeholder="Title"
+          placeholder="titel"
           register={register}
           registerOptions={{ required: "Required"}}
-          error={errors.sensorname}
+          error={errors.titel}
           />
           <TextInputField
-          name="grad"
-          label="Grad Zahl?"
+          name="text"
+          label="text Zahl?"
           as="textarea"
           rows={5}
           placeholder="Text"
@@ -83,7 +83,7 @@ const AddEditSensorDataDialog = ({
         {/*The Footer is disconnected from the Body, so we have to connect it, the type="submit" is pretty much an onclick listener and sends the data we entered in the fields*/}
         <Button
           type="submit"
-          form="addEditSensorDataForm"
+          form="addEditListDataForm"
           disabled={isSubmitting}
         >
           Save
@@ -93,4 +93,4 @@ const AddEditSensorDataDialog = ({
   );
 };
 // modal show passes as true, closebutton creates the little X
-export default AddEditSensorDataDialog;
+export default AddEditListDataDialog;

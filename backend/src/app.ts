@@ -1,6 +1,6 @@
 import "dotenv/config";                                                                                      //for .env folder
 import express, { NextFunction, Request, Response } from "express";                                          //import express
-import sensordatasRoutes from "./routes/sensordatas"
+import listdataRoutes from "./routes/lists"
 import createHttpError, { isHttpError } from "http-errors";                                                  //createHttpError is a default immport, isHttpError not 
 import morgan from "morgan"
 import userRoutes from "./routes/users";
@@ -39,7 +39,7 @@ app.use(session({
 
 
 app.use("/api/users", userRoutes);
-app.use("/api/sensordata",requiresAuth,  sensordatasRoutes);                                                               //linking the sensordataroute //we call requiresAuth Middleware so we check if a user session is already established or not
+app.use("/api/listdata",requiresAuth,  listdataRoutes);                                                               //linking the sensordataroute //we call requiresAuth Middleware so we check if a user session is already established or not
 
 app.use((req, res, next) => {
     next(createHttpError(404, "Endpoint not found"));                                                        //Error handling via the http-errors package

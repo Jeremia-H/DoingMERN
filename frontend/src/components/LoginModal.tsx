@@ -1,7 +1,7 @@
 import { useForm } from "react-hook-form";
 import { User } from "../models/user";
-import { LoginCredentials } from "../network/sensordatas_api";
-import * as SensorDataApi from "../network/sensordatas_api";
+import { LoginCredentials } from "../network/listdatas_api";
+import * as listDataApi from "../network/listdatas_api";
 import { Alert, Button, Form, Modal } from "react-bootstrap";
 import TextInputField from "./form/TextInputField";
 import styleUtils from "../styles/utils.module.css";
@@ -22,7 +22,7 @@ const LoginModal = ({onDismiss, onLoginSuccessful}: LoginModalProps) => {
 
     async function onSubmit(credentials:LoginCredentials) { //this function gets handled by handleSubmit
         try {
-            const user = await SensorDataApi.login(credentials)
+            const user = await listDataApi.login(credentials)
             onLoginSuccessful(user);
         } catch (error) {
             if (error instanceof UnauthorizedError) {
